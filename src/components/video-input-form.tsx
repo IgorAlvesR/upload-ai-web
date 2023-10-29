@@ -7,6 +7,7 @@ import { ChangeEvent, FormEvent, useMemo, useRef, useState } from "react";
 import { getFFmpeg } from "@/lib/ffmpeg";
 import { fetchFile } from '@ffmpeg/util'
 import { api } from "@/lib/axios";
+import { InputVideo } from "./input-video";
 
 type Status = 'waiting' | 'converting' | 'uploading' | 'generating' | 'success'
 
@@ -42,8 +43,13 @@ export function VideoInputForm(props: VideoInputFormProps) {
       console.log('Convert started.')
 
       const ffmpeg = await getFFmpeg()
-
-      await ffmpeg.writeFile('input.mp4', await fetchFile(video))
+      try {
+        
+        await ffmpeg.writeFile('input.mp4', await fetchFile(video))
+      } catch (error) {
+        console.log(error)
+        
+      }
 
       /* ffmpeg.on('log', log => {
         console.log(log)
@@ -88,9 +94,8 @@ export function VideoInputForm(props: VideoInputFormProps) {
 
       setStatus('converting')
 
-      const audioFile = await convertVideoToAudio(videoFile)
+      const audioFile = await convertVideoToAudio(videoFile)      
 
-      
       const data = new FormData()
       data.append('file', audioFile)
       
@@ -119,19 +124,7 @@ export function VideoInputForm(props: VideoInputFormProps) {
 
     return (
         <form onSubmit={handleUploadVideo} className="space-y-6">
-            <label
-              className="relative border flex rounded-md aspect-video cursor-pointer border-dashed text-sm flex-col items-center justify-center to-muted-foreground hover:bg-primary/5" 
-              htmlFor="video"
-            >
-              {previewURL ? (
-                <video src={previewURL} controls={false} className="h-full pointer-events-none absolute inset-0" />
-              ) : (
-                <>
-                  <FileVideo className="w-4 h-4" />
-                  Selecione um vídeo
-                </>
-              )}
-            </label>
+           <InputVideo preview={ previewURL }/>
 
             <input className="sr-only" type="file" id="video" accept="video/mp4" onChange={handleFileSelected} />
 
