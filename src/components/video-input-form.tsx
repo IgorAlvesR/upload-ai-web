@@ -7,7 +7,7 @@ import { ChangeEvent, FormEvent, useMemo, useRef, useState } from 'react'
 import { getFFmpeg } from '@/lib/ffmpeg'
 import { fetchFile } from '@ffmpeg/util'
 import { api } from '@/lib/axios'
-import { InputVideo } from './input-video'
+import { LabelVideoInput } from './label-video-input'
 
 type Status = 'waiting' | 'converting' | 'uploading' | 'generating' | 'success'
 
@@ -121,7 +121,7 @@ export function VideoInputForm(props: VideoInputFormProps) {
 
   return (
     <form onSubmit={handleUploadVideo} className="space-y-6">
-      <InputVideo preview={previewURL} />
+      <LabelVideoInput preview={previewURL} />
 
       <input
         className="sr-only"

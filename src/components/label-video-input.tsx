@@ -4,7 +4,7 @@ type InputVideoProps = {
   preview: string | null
 }
 
-export function InputVideo({ preview }: InputVideoProps) {
+export function LabelVideoInput({ preview }: InputVideoProps) {
   return (
     <label
       className="relative border flex rounded-md aspect-video cursor-pointer border-dashed text-sm flex-col items-center justify-center to-muted-foreground hover:bg-primary/5"
@@ -12,6 +12,7 @@ export function InputVideo({ preview }: InputVideoProps) {
     >
       {preview ? (
         <video
+          data-testid="video-preview"
           src={preview}
           controls={false}
           className="h-full pointer-events-none absolute inset-0"
