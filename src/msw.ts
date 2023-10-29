@@ -1,16 +1,16 @@
-import { setupServer } from "msw/node"
-import { beforeAll, afterEach, afterAll } from "vitest"
+import { setupServer } from 'msw/node'
+import { beforeAll, afterEach, afterAll } from 'vitest'
 
 export const server = setupServer()
 
-beforeAll(() => {  
+beforeAll(() => {
   server.listen()
 })
- 
-afterEach(() => {  
+
+afterEach(() => {
   server.resetHandlers()
 })
- 
+
 afterAll(() => {
   server.close()
 })
