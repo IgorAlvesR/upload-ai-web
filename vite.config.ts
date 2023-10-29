@@ -1,17 +1,19 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
-import path from "path"
+import path from 'path'
 
-
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-    optimizeDeps: {
-      exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util']
-    },
-   resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    }, 
+  plugins: [react()],  
+  test: {
+    environment: 'jsdom',    
+    globals: true
   },
+  optimizeDeps: {
+    exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util']
+  },
+  resolve: {
+  alias: {
+    "@": path.resolve(__dirname, "./src"),
+  }, 
+},
 })
